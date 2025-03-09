@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+</head>
+<body>
+    <h1>Список книг</h1>
+    <ul>
+        {% for book in books %}
+            <li>
+                <strong>{{ book.title }}</strong> от {{ book.author }} - {{ book.price }} руб.
+<a href="{% url 'book_edit' book.id %}">Редактировать</a>
+                <a href="{% url 'book_delete' book.id %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'book_add' %}">Добавить книгу</a></p>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Выход</button>
+    </form>
+</body>
+</html>
