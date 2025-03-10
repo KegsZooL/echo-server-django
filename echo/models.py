@@ -12,7 +12,6 @@ class Book(models.Model):
 
 
 class CustomUser(AbstractUser):
-
     ROLE_CHOICES = [
             ('user', 'Пользователь'),
             ('admin', 'Администратор'),
