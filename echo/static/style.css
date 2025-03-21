@@ -1,0 +1,25 @@
+.navbar-brand {
+    border: 3px solid black;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2.5vmin;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.table_content {
+    border-spacing: 0 10px;
+}
+
+.table_content th, .table_content td {
+    padding: 10px;
+}
+
+.item_counter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.5vmin;
+}
