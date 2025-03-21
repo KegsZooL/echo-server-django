@@ -21,9 +21,11 @@
             <img src="{% static 'images/shopping-cart.png' %}" width="30" height="30" class="d-inline-block aligin top" alt="">
             Корзина
         </a>
+        <a class="navbar-brand" href="orders">
+            <img src="{% static 'images/clipboard.png' %}" width="30" height="30" class="d-inline-block aligin top" alt="">
+            Заказы 
+        </a>
     </nav>
-    
-    <h1 class="mb-4">Список книг</h1>
     
     <ul class="list-group">
         {% for book in page_obj %}

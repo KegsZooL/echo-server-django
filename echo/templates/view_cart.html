@@ -11,46 +11,37 @@
 
 <body>
 
-{% block content %}
     <h1>Ваша корзина</h1>
     
-    {% if cart_items %}
-        <table class="table_content">
-            <tr>
-                <th>Книга</th>
-                <th>Автор</th>
-                <th>Цена</th>
-            </tr>
-            {% for item in cart_items %}
-            <tr>
-                <td>{{ item.book.title }}</td>
-                <td>{{ item.book.author }}</td>
-                <td>{{ item.book.price }}</td>
-                <td>
-                    
-                    <div class="item_counter">
-                        <form action="{% url 'remove_from_cart' item.book.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">-</button>
-                        </form>
-                        
-                        {{ item.quantity }}
-
-                        <form action="{% url 'add_to_cart' item.book.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">+</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+    <form>
+        {% if cart_items %}
+            <table class="table_content">
+                <tr>
+                    <th>Книга</th>
+                    <th>Автор</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                </tr>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.book.title }}</td>
+                        <td>{{ item.book.author }}</td>
+                        <td>{{ item.book.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         <h3>Общая стоимость: {{ total_price }} руб.</h3>
-    {% else %}
-        <p>Ваша корзина пуста.</p>
-    {% endif %}
-    <p><a href="../">Перейти к списку книг</a></p>
-{% endblock %}
+        
+        {% else %}
+            <p>Ваша корзина пуста.</p>
+        {% endif %}
+        <p><a href="../">Перейти к списку книг</a></p>
+    </form>
+    <form action="{% url 'checkout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Оформить заказ</button>
+    </form>
 
 </body>
 </html>

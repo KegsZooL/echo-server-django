@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CustomAuthenticationForm, CustomUserCreationForm, BookForm, CustomUserForm
-from .models import Book, CartItem
+from .models import Book, CartItem, Order, OrderItem
 
 def login_view(request):
     if request.method == 'POST':
@@ -135,3 +135,27 @@ def view_cart(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.book.price * item.quantity for item in cart_items)
     return render(request, 'view_cart.html', { 'cart_items': cart_items, 'total_price': total_price })
+
+@login_required
+def checkout(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    if not cart_items.exists():
+        messages.error(request, "Ваша корзина пуста")
+        return redirect('cart')
+
+    order = Order.objects.create(user=request.user)
+
+    for item in cart_items:
+        OrderItem.objects.create(order=order, book=item.book, quantity=item.quantity)
+
+    order.calculate_total_price()
+    cart_items.delete()
+
+    messages.success(request, "Заказ успешно оформлен!")
+    return redirect('cart') 
+
+@login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'order_list.html', {'orders': orders})

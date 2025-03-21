@@ -1,3 +1,0 @@
-│  templatetags
-│ │  __init__.py                   
-│ └  get_item.py                   
