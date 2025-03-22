@@ -68,7 +68,9 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-sm">-</button>
                             </form>
+                            
                             <span>{{ cart_books|get_item:book.id }}</span>
+                          
                             <form action="{% url 'add_to_cart' book.id %}" method="POST" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success btn-sm">+</button>

@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'bookstore',
         'USER': 'user_for_echo_server',
         'PASSWORD': '5AEbZF6G',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432'
     }
 }

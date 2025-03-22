@@ -37,3 +37,9 @@ title, h1 {
     align-items: center;
     gap: 2.5vmin;
 }
+
+.action_buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2.5vmin;
+}

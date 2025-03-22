@@ -2,6 +2,7 @@ from collections import defaultdict
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import AnonymousUser
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -35,10 +36,13 @@ def register(request):
 
 def book_list(request):
     books = Book.objects.all()
-    cart_items = CartItem.objects.filter(user=request.user)
     
-    cart_books = {item.book.id: item.quantity for item in cart_items}
-    
+    if isinstance(request.user, AnonymousUser):
+        cart_books = {}
+    else:
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_books = {item.book.id: item.quantity for item in cart_items}
+
     paginator = Paginator(books, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

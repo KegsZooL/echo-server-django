@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:17.4
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user_for_echo_server
+      - POSTGRES_PASSWORD=5AEbZF6G
+      - POSTGRES_DB=bookstore
+    ports:
+      - '5432:5432'
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+
+
+volumes:
+  postgres_data:
+
