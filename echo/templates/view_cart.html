@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Корзина</title>
+</head>
+
+<body>
+
+    <h1>Ваша корзина</h1>
+    
+    <form>
+        {% if cart_items %}
+            <table class="table_content">
+                <tr>
+                    <th>Книга</th>
+                    <th>Автор</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                </tr>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.book.title }}</td>
+                        <td>{{ item.book.author }}</td>
+                        <td>{{ item.book.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        <h3>Общая стоимость: {{ total_price }} руб.</h3>
+        
+        {% else %}
+            <p>Ваша корзина пуста.</p>
+        {% endif %}
+    </form>
+    
+    <div class="action_buttons">
+        <button type="button" class="btn btn-info" onclick="window.location.href='../';">Перейти к списку книг</button>
+
+        <form action="{% url 'checkout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Оформить заказ</button>
+        </form>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+ 
+    <h1>Мои заказы</h1>
+    
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form>
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                    <li>
+                        <strong>Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}<br>
+                        <strong>Общая стоимость:</strong> {{ order.total_price }} руб.<br>
+                        <strong>Состав заказа:</strong>
+                        <ul>
+                            {% for item in order.order_items.all %}
+                                <li>{{ item.book.title }} — {{ item.quantity }} шт.</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <hr>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>У вас пока нет заказов.</p>
+        {% endif %}
+    </form>
+
+
+    <div class="action_buttons">
+        <button type="button" class="btn btn-info" onclick="window.location.href='../';">Перейти к списку книг</button>
+    </div>
+
+</html>

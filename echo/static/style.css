@@ -1,0 +1,45 @@
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    border: 3px solid black;
+    gap: 2.5vmin;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+title, h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2.5vmin;
+    margin-bottom: 2.5vmin;
+}
+
+.table_content {
+    border-spacing: 0 10px;
+}
+
+.table_content th, .table_content td {
+    padding: 10px;
+}
+
+.item_counter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.5vmin;
+}
+
+.action_buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2.5vmin;
+}

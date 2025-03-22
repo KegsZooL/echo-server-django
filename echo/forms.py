@@ -1,8 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Book, CustomUser
 
+import re
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField()
@@ -39,7 +41,7 @@ class BookForm(forms.ModelForm):
         return price
 
 
-    def clean(self):
+    def clean_fields(self):
         cleaned_data = super().clean()
         title = cleaned_data.get('title')
         author = cleaned_data.get('author')
@@ -49,3 +51,21 @@ class BookForm(forms.ModelForm):
             raise forms.ValidationError("Книга с таким названием и автором уже существует.")
 
         return cleaned_data
+
+class CustomUserForm(forms.ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name']
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not re.match(r'^[A-Za-zА-Яа-яёЁ]+$', first_name):
+            raise forms.ValidationError('Имя может содержать только буквы.')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not re.match(r'^[A-Za-zА-Яа-яёЁ]+$', last_name):
+            raise forms.ValidationError('Фамилия может содержать только буквы.')
+        return last_name 
